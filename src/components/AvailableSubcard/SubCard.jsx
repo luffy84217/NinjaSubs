@@ -43,18 +43,15 @@ export default ({ sub }) => {
         sub.likes.includes(profileData.uid) ? unlike() : like();
     };
     const handleStartChat = () => {
-        // if (!isUserVerfied()) {
-        //     return;
-        // }       
         searchInbox(sub)
     }
 
-    const showProfilePicture = () =>{
+    const showProfilePicture = () => {
         console.log(sub.image)
     }
 
     React.useEffect(() => {
-        console.log('TODO -- re-apply restrictions')
+        console.log('TODO -- create imagebox')
         if (sub.likes !== undefined) {
             sub.likes.includes(profileData.uid)
                 ? setLiked(true)
@@ -69,7 +66,7 @@ export default ({ sub }) => {
                 className={classes.header}
                 avatar={
                     <Avatar
-                    onClick={showProfilePicture}
+                        onClick={showProfilePicture}
                         className={classes.avatar}
                         src={`${sub.image}`} alt='avatar image' />}
                 title={<h3>{sub.name}</h3>}

@@ -61,6 +61,12 @@ export default () => {
   }
   const clearIgnoreList = () => {
     updateProfileData({ ignoreList: [] })
+    .then(()=>{
+      feedback('success', 'List cleared')
+    })
+    .catch((err)=>{
+      feedback('error', err)
+    })
   }
 
 

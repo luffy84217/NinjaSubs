@@ -101,10 +101,7 @@ export default () => {
     const handleNegRates = () => {
         setPost({ ...post, neg: post.Neg ? false : true })
     }
-    const handleSubmit = () => {
-        // if (!isUserVerfied()) {
-        //     return;
-        // }
+    const handleSubmit = () => {      
         if (!constants.isNewPostAllowed(noticeboardQuery, profileData)) {
             feedback('error', 'Only 4 posts allowed');
             return;
@@ -125,8 +122,7 @@ export default () => {
     useEffect(() => {
         if (profileData) {
             setPost(newPost(profileData))
-        }
-        console.log('re- apply restrictions')
+        }       
     }, [])
 
     useEffect(() => {

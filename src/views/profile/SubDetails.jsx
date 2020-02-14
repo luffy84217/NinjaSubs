@@ -39,7 +39,7 @@ const DetailsCard = () => {
     const classes = styles();
     const { state, constants, methods, fb } = useContext(GlobalState);
     const { user, profileData } = state;
-    const { updateProfileData, feedback } = methods;
+    const { updateProfileData, feedback, isUserVerfied } = methods;
     const { Taipei, newSubBoardListing } = constants;
     const [chipsArray, setChipsArray] = useState([]);
     const [formData, setFormData] = useState(false)
@@ -107,24 +107,25 @@ const DetailsCard = () => {
         fb.availableSubs.doc(user.uid)
             .set(newSubBoardListing(profileData))
             .catch((err) => {
-                feedback('error', err.message)
-                console.log(err)
+                feedback('error', err.message)                
             })
     }
     const handleAvailable = async () => {
-        // if (!isUserVerfied()) {
-        //     return;
-        // }
+        if (!isUserVerfied()) {
+            return;
+        }
         if (profileData.name === null) {
             feedback('error', "You have not added a username");
             return
         }
-        updateProfileData({ available: profileData.available ? false : true })
+
         fb.availableSubs.doc(user.uid)
             .update(newSubBoardListing(profileData))
+            .then(() => {
+                updateProfileData({ available: profileData.available ? false : true })
+            })
             .catch((err) => {
-                createNewSub();
-                console.log(err);
+                createNewSub();                
             })
     }
 
@@ -192,7 +193,7 @@ const DetailsCard = () => {
                                 <label>About:</label>
                                 <TextareaAutosize
                                     className={classes.textArea}
-                                    onChange={handleData('bio')}                                    
+                                    onChange={handleData('bio')}
                                     defaultValue={profileData.bio}
                                 />
                             </FormGroup>

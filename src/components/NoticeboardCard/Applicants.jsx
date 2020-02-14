@@ -17,7 +17,7 @@ export default ({ candidates }) => {
     const handleCollapse = () => {
         collapse ? setCollapse(false) : setCollapse(true)
     }
-    return (candidates.length > 0 && candidates !== undefined &&
+    return (candidates !== undefined && candidates.length > 0 &&
         <React.Fragment>
             <ListItem className='p-0'>
                 <ListItemIcon>

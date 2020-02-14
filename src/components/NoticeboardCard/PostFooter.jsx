@@ -29,10 +29,13 @@ import { CheckCircle, CloseRounded, Star } from '@material-ui/icons';
 
 const PostFooter = ({ post }) => {
     const { state, methods, fb, constants } = React.useContext(GlobalState);
-    const { updateProfileData, feedback } = methods;
+    const { updateProfileData, feedback, isUserVerfied } = methods;
     const { profileData } = state;
 
     const apply = () => {
+        if (!isUserVerfied()) {
+            return;
+        }
         fb.applyToJobPost(post, profileData, feedback);
     }
     const ignore = () => {

@@ -62,7 +62,7 @@ export const GlobalStatePovider = (props) => {
   const isUserVerfied = () => {
     let currentUser = fb.auth.currentUser;
     if (!currentUser.emailVerified) {
-      feedback('error', 'Unverified users cannot use this feature');
+      feedback('error', 'Only verified users can use this feature');
       return false;
     }
     return true
@@ -88,7 +88,12 @@ export const GlobalStatePovider = (props) => {
     fb.handleProfileData(user.uid, setProfileData, setLoading, setCreateUserProfile);
   };
   const updateProfileData = (data) => {
-    fb.updateProfileData(user, profileData, data);
+    return new Promise((resolve, reject) => {
+      fb.updateProfileData(user, profileData, data)
+        .then(() => { resolve(true) })
+        .catch((err) => { reject(err.message) })
+    })
+
   };
   const queryNoticeboard = () => {
     fb.queryNoticeboard(setNoticeboardQuery);
@@ -105,6 +110,9 @@ export const GlobalStatePovider = (props) => {
     fb.deleteUser(user, profileData, feedback);
   };
   const searchInbox = (chatee) => {
+    if (!isUserVerfied()) {
+      return;
+    }
     fb.searchInbox(inbox, profileData, chatee, hist, setSelectedChat, handleModals);
   }
   const deleteChatroom = (id) => {

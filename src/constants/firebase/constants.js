@@ -58,8 +58,7 @@ export const updateProfileData = (user, profileData, data) => {
         return;
     }
     return new Promise((resolve, reject) => {
-        users.doc(user.uid).update(data).then((doc) => {
-            console.log('Profile Updated')
+        users.doc(user.uid).update(data).then(() => {           
             resolve(true);
         }).catch((err) => {
             console.log(err.message);
@@ -121,7 +120,7 @@ export const startChat = (profileData, chatee, history, setSelectedChat) => {
         .then(() => {
             followChat(newChat.room_id, history, setSelectedChat)
         })
-        .catch((err) => { console.log(err) })
+        .catch((err) => { console.log(err.message) })
 };
 export const followChat = async (id, history, setSelectedChat) => {
     privateChats.doc(`${id}`).onSnapshot(function (doc) {

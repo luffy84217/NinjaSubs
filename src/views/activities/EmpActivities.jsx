@@ -36,9 +36,12 @@ import PostBody from '../../components/NoticeboardCard/PostBody';
 const ActivitiesCard = () => {
     const { state, methods, constants, setState, fb, filters } = useContext(GlobalState);
     const { profileData, noticeboardQuery, searchList } = state;
-    const { handleModals, feedback } = methods;
+    const { handleModals, feedback, isUserVerfied } = methods;
 
     const createPost = () => {
+        if (!isUserVerfied()) {
+            return;
+        }
         if (!constants.isNewPostAllowed(noticeboardQuery, profileData)) {
             feedback('error', 'Only 4 posts allowed');
             return;
