@@ -1,23 +1,23 @@
 import React from "react";
 
-// reactstrap components
-import { CardBody, Col, Row } from "reactstrap";
-
 import {
     Chip, Collapse, Avatar, Button,
     ListItemIcon, ListItemText, ListItem
 } from '@material-ui/core';
 
 import {
-    EmojiPeople, AccountBox, ExpandLess, ExpandMore
+    EmojiPeople, ExpandLess, ExpandMore
 } from '@material-ui/icons';
+
+
+import SubCard from '../SubCard/SubCard';
 
 export default ({ candidates }) => {
     const [collapse, setCollapse] = React.useState(false);
     const handleCollapse = () => {
         collapse ? setCollapse(false) : setCollapse(true)
     }
-    return (
+    return (candidates.length > 0 && candidates !== undefined &&
         <React.Fragment>
             <ListItem className='p-0'>
                 <ListItemIcon>
@@ -30,15 +30,13 @@ export default ({ candidates }) => {
                 <Button onClick={handleCollapse}>
                     {collapse ? <ExpandLess /> : <ExpandMore />}
                 </Button>
-            </ListItem> 
+            </ListItem>
             <Collapse in={collapse} >
-                {candidates.map((sub, i) =>
-                    <Chip
-                        key={i}
-                        label={sub.name}                        
-                        avatar={<Avatar src={sub.image} alt={sub.name} />}
-                        clickable={true} />
-                )}
+                <div className='d-flex flex-wrap' >
+                    {candidates.map((sub, i) =>
+                        <SubCard key={i} sub={sub} />
+                    )}
+                </div>
             </Collapse>
         </React.Fragment>
     )
