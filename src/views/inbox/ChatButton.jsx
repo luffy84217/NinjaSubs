@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 
-import GlobalState from '../../state/store';
+// Store
+import store from 'state';
 
 import { Avatar } from '@material-ui/core';
 
@@ -8,7 +9,7 @@ import { useStyles } from './styles'
 
 export default ({ chat }) => {
   const classes = useStyles();
-  const { state, setState, fb, constants, hist, methods } = useContext(GlobalState);
+  const { state, setState, fb, constants, hist, methods } = useContext(store);
   const { profileData } = state;
   const { setSelectedChat } = setState;
   const { isUserVerfied } = methods;
@@ -16,9 +17,9 @@ export default ({ chat }) => {
   const [recipient, setRecipient] = useState({ name: '', image: '' });
 
   const selectChat = () => {
-    if (!isUserVerfied()) {
-      return;
-    }
+    // if (!isUserVerfied()) {
+    //   return;
+    // }
     fb.followChat(chat.room_id, hist, setSelectedChat);
   }
 

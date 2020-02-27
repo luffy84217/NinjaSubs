@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import GlobalState from '../../state/store';
+import store from 'state';
 
 import {
     Button, Container, Avatar
@@ -9,7 +9,7 @@ import { useStyles } from './styles';
 
 export default () => {
     const classes = useStyles();
-    const { state, methods, constants, fb } = useContext(GlobalState);
+    const { state, methods, constants, fb } = useContext(store);
     const { selectedChat, profileData } = state;
     const { chatPost, ninjaStar } = constants;
     const { feedback } = methods;
@@ -18,30 +18,38 @@ export default () => {
     const handleNewPost = (e) => {
         setNewPost(e.target.value)
     }
-    const post = () => {
-        if (newPost === '') {
-            return;
+    const post = (value) => (e) => {  
+        if (e.key === "Enter" || value === 'btn') {
+            if (newPost === '') {
+                return;
+            }
+            var newChat = chatPost(profileData, newPost);
+            fb.privateChats.doc(`${selectedChat.room_id}`).update({
+                messages: [...selectedChat.messages, newChat]
+            })
+                .then(() => {
+                    setNewPost('')
+                })
+                .catch(function (error) {
+                    feedback("error", 'Chat room does not exist');
+                });
         }
-        var newChat = chatPost(profileData, newPost);
-        fb.privateChats.doc(`${selectedChat.room_id}`).update({
-            messages: [...selectedChat.messages, newChat]
-        }).catch(function (error) {
-            feedback("error", 'Chat room does not exist');
-        });
     };
 
     return (
-        <Container
+        <Container onKeyPress={post()}
             className={classes.footer}>
-            <input   
+            <input
+                value={newPost}
                 className={classes.textInputDiv}
                 type='text'
                 onChange={handleNewPost} />
             <Button
                 className='p-1'
                 variant='outlined'
+                id='postBtn'
                 children={<Avatar src={ninjaStar} />}
-                onClick={post} />
+                onClick={post('btn')} />
         </Container>
     );
 }

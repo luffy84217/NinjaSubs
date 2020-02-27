@@ -1,12 +1,12 @@
 import React from 'react';
-import GlobalState from '../../state/store';
+import GlobalState from '../../state';
 
 // Styles
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
-    root: {
+    show: {
         display: 'flex',
         '& > * + *': {
             marginLeft: theme.spacing(2),
@@ -32,7 +32,7 @@ export default function CircularIndeterminate() {
     const { loading } = state;
 
     return (
-        <div className={loading ? classes.root : classes.hide}>
+        <div className={!loading ? classes.hide : classes.show}>
             <CircularProgress
                 style={{
                     width: 80,

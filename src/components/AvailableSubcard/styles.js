@@ -1,9 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { boxShadow } from 'assets/jss/material-kit-react';
 export const useStyles = makeStyles(theme => ({
     card: {
         width: '100%',
         maxWidth: 600,
-        marginTop: 12
+        marginTop: 12,
+        ...boxShadow
     },
     expand: {
         transform: 'rotate(0deg)',

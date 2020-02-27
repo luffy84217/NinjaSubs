@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import GlobalState from '../../state/store';
+import store from 'state';
 
 import { ListItem, ListItemText } from '@material-ui/core';
 
@@ -7,7 +7,7 @@ import { useStyles } from './styles';
 
 export default ({ list }) => {
     const classes = useStyles();
-    const { state } = useContext(GlobalState);
+    const { state } = useContext(store);
     const { profileData } = state;
 
     return (list &&

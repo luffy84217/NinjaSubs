@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import GlobalState from '../../state/store';
+import GlobalState from 'state';
 
 // Components
 import {

@@ -6,14 +6,15 @@ import {
 } from '@material-ui/core';
 
 export default ({ props }) => {
-    const { i, item, listOfClicks, styles } = props;
+    const { i, item, listOfClicks, classes } = props;
     return (
-        <ListItem
-            className={styles.listItem}>
+        <ListItem button
+            className={classes.listItem}
+            onClick={() => listOfClicks[i]()}>
             <ListItemText>
                 {item.text}
             </ListItemText>
-            <Button onClick={() => listOfClicks[i]()}>
+            <Button >
                 {item.icon}
             </Button>
             <Divider />

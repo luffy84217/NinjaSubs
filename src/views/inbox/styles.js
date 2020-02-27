@@ -1,7 +1,11 @@
+import { body, primaryGradient } from "assets/jss/material-kit-react";
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     body: {
+        ...body
+      },
+    chatBody: {
         display: 'grid',
         gridTemplateRows: '35px fit-content 45px',
         width: '100%',
@@ -20,14 +24,15 @@ export const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
-    chatBody: {
+    textBody: {
         overflow: 'hidden',
         overflowY: 'scroll',
         padding: '0px 12px',
-        height: '73vh'
+        height: '73vh',
+        backgroundColor: 'whitesmoke'
     },
     toolbar: {
-        backgroundColor: '#3f3a3a',
+        ...primaryGradient,
         width: '100%',
         minHeight: 0,
         display: 'flex',
@@ -68,7 +73,8 @@ export const useStyles = makeStyles(theme => ({
         borderTop: '1px solid #3f51b5',
         margin: 0,
         padding: 5,
-        backgroundColor: 'gainsboro'
+        backgroundColor: 'gainsboro',
+        width: '100%'
     },
     textInputDiv: {
         display: 'flex',

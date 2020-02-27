@@ -1,12 +1,12 @@
 /*eslint-disable */
 import React from 'react';
-import GlobalState from '../../state/store';
+import store from 'state';
 
 import {
     Card, CardHeader, CardContent, CardActions,
-    Collapse, Avatar, IconButton, Typography, Badge,
-    TextareaAutosize
+    Collapse, Avatar, IconButton, Typography, Badge
 } from '@material-ui/core';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import { Favorite, ExpandMore, ChatBubble } from '@material-ui/icons';
 
@@ -15,7 +15,7 @@ import clsx from 'clsx';
 import { useStyles } from './styles';
 
 export default ({ sub }) => {
-    const { state, methods, fb, constants } = React.useContext(GlobalState);
+    const { state, methods, fb, constants } = React.useContext(store);
     const { profileData } = state;
     const { add_if_not_included, remove_from_array, ninjaStar } = constants;
     const { searchInbox, isUserVerfied } = methods;
@@ -85,7 +85,7 @@ export default ({ sub }) => {
                 disableSpacing>
                 <Badge
                     classes={{
-                        anchorOriginTopRightRectangle: classes.badge
+                        root: classes.badge
                     }}
                     badgeContent={sub.likes !== undefined ? sub.likes.length : 0}>
                     <IconButton

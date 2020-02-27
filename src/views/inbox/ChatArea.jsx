@@ -1,23 +1,28 @@
 /*eslint-disable */
 import React, { useContext, useState, useEffect } from 'react';
-import GlobalState from '../../state/store';
+// Store
+import store from 'state';
 
 import {
     Toolbar, IconButton, Container,
     Typography, Tooltip
 } from '@material-ui/core';
-
+// core components
+import Header from "components/Header/Header.js";
+// Menu Links
+import HeaderLinks from "components/Header/HeaderLinks.js";
 
 import { ChevronLeft, Close, VoiceOverOff } from '@material-ui/icons';
 
-import MessageList from './MessageList'
-import Footer from './Footer'
-
-import { useStyles } from './styles'
+import MessageList from './MessageList';
+import Footer from './Footer';
+import { bodyContainer } from "assets/jss/material-kit-react";
+// Styles
+import { useStyles } from './styles';
 
 export default () => {
     const classes = useStyles();
-    const { methods, state, constants, hist } = useContext(GlobalState);
+    const { methods, state, constants, hist } = useContext(store);
     const { updateProfileData, deleteChatroom } = methods;
     const { selectedChat, profileData } = state;
     const [list, setList] = useState([]);
@@ -57,7 +62,7 @@ export default () => {
             })
     }
     const goBack = () => {
-        hist.push('/home/inbox');
+        hist.push('/contacts');
     }
 
     useEffect(() => {
@@ -70,45 +75,56 @@ export default () => {
     }, [selectedChat, profileData])
 
     return (
-        <div className={classes.body}>
-            <Toolbar className={classes.toolbar}>
-                <IconButton
-                    onClick={goBack}
-                    color="inherit"
-                    edge="start" >
-                    <ChevronLeft />
-                </IconButton>
-
-                <Typography variant='h6'
-                    className={classes.navlink}
-                    children={recipient ? recipient.name : ''} />
-
-                <div>
-                    <Tooltip
-                        title='Block user'
-                        placement='left'>
+        <div>
+            <Header
+                brand="NinjaSubs"
+                rightLinks={<HeaderLinks />}
+                fixed
+                color="dark"
+            />
+            <div className={classes.body}>
+                <div className='d-flex flex-column align-items-center col-12 col-md-8 col-lg-7 col-xl-5 p-0 m-0'>
+                    <Toolbar className={classes.toolbar}>
                         <IconButton
-                            onClick={blockUser}
+                            onClick={goBack}
                             color="inherit"
                             edge="start" >
-                            <VoiceOverOff />
+                            <ChevronLeft />
                         </IconButton>
-                    </Tooltip>
-                    <IconButton
-                        color="inherit"
-                        aria-label="delete chat"
-                        onClick={deleteChat}
-                        edge="start" >
-                        {<Close />}
-                    </IconButton>
+
+                        <Typography variant='h6'
+                            className={classes.navlink}
+                            children={recipient ? recipient.name : ''} />
+
+                        <div>
+                            <Tooltip
+                                title='Block user'
+                                placement='left'>
+                                <IconButton
+                                    onClick={blockUser}
+                                    color="inherit"
+                                    edge="start" >
+                                    <VoiceOverOff />
+                                </IconButton>
+                            </Tooltip>
+                            <IconButton
+                                color="inherit"
+                                aria-label="delete chat"
+                                onClick={deleteChat}
+                                edge="start" >
+                                {<Close />}
+                            </IconButton>
+                        </div>
+                    </Toolbar>
+                    <div className={classes.chatArea}>
+                        <Container className={classes.textBody}>
+                            {selectedChat ? <MessageList list={list} /> : <NoChat />}
+                        </Container>
+                    </div>
+                    <Footer />
                 </div>
-            </Toolbar>
-            <div className={classes.chatArea}>
-                <Container className={classes.chatBody}>
-                    {selectedChat ? <MessageList list={list} /> : <NoChat />}
-                </Container>
             </div>
-            <Footer />
         </div>
+
     );
 }

@@ -1,11 +1,22 @@
 
 
-import app from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore'
 import 'firebase/storage';
 
-let credentials = {
+let ninjasubs_test = {
+    apiKey: "AIzaSyBITwvEtuVCOpfe5bFGV-Swo4qt8oOVbFk",
+    authDomain: "ninjasubs-test.firebaseapp.com",
+    databaseURL: "https://ninjasubs-test.firebaseio.com",
+    projectId: "ninjasubs-test",
+    storageBucket: "ninjasubs-test.appspot.com",
+    messagingSenderId: "981066403004",
+    appId: "1:981066403004:web:ba53ac0169e01f915914b9",
+    measurementId: "G-465MW8WWZP"
+}
+
+let ninjaSubs_taipei = {
     apiKey: "AIzaSyBd0MJSCCN1nUdzYoCpzYopaU9uCaet-AA",
     authDomain: "ninjasubs-taipei.firebaseapp.com",
     databaseURL: "https://ninjasubs-taipei.firebaseio.com",
@@ -16,4 +27,4 @@ let credentials = {
     measurementId: "G-KEX87QTP3Z"
 }
 
-export default app.initializeApp(credentials)
+export default firebase.initializeApp(ninjaSubs_taipei)

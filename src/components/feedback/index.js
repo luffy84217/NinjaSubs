@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { DismissBtn, LogoutBtn } from '../buttons';
+import { DismissBtn, LogoutBtn } from '../Buttons';
 
 export const createFeedback = (variant, message, enqueueSnackbar, closeSnackbar, hist) => {
     const dismiss = key => (

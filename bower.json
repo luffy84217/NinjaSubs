@@ -1,0 +1,26 @@
+{
+  "name": "ninjaSubs",
+  "homepage": "https://ninjasubs-test.web.app/",
+  "authors": [
+    "creative-tim",
+    "roscoe van der boom"
+  ],
+  "description": "A servicefor schools and substitute teachers to connect.",
+  "main": "dist/index.js",
+  "keywords": [
+    "material",
+    "design",
+    "material-ui",
+    "education",
+    "react"
+  ],
+  "license": "Creative TIM License",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true
+}
