@@ -25,13 +25,16 @@ const useStyles = makeStyles(theme => ({
     padding: '8px 0px',
     textAlign: 'center',
     width: '60%',
-    color: 'white'
+    color: 'white',
+    borderRadius: 6
   },
   container: {
     ...boxShadow,
     backgroundColor: '#f1f1f1',
+    maxWidth: 500,
     [theme.breakpoints.down('sm')]: {
-      padding: 0
+      padding: 0,
+      width: '100%',
     },
     display: 'flex',
     flexDirection: 'column',
@@ -56,7 +59,6 @@ const useStyles = makeStyles(theme => ({
     ...body
   }
 }));
-
 
 export default () => {
   const { state, methods, fb } = useContext(store);
@@ -114,8 +116,6 @@ export default () => {
         feedback('error', err)
       })
   }
-
-
   // Slice 1st item from list for employer view
   let onClickMethods = [
     clearIgnoreList, clearBlockedUserList, handleChangeEmail,
