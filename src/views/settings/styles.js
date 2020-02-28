@@ -8,8 +8,10 @@ export default makeStyles(theme => ({
     textAlign: 'center'
   },
   container: {
+    maxWidth: 500,
     [theme.breakpoints.down('sm')]: {
-      padding: 0
+      padding: 0,
+      width: '100%',
     }
   },
   list: {

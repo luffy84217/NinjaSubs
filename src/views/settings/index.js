@@ -141,19 +141,17 @@ export default () => {
         color="dark"
       />
       <div className={classes.body}>
-        <div className={bodyContainer}>
-          <Container className={classes.container}>
-            <Typography className={classes.header}
-              componant='header'
-              variant='h5'
-              children={'Account Settings'} />
-            <List className={classes.list}>
-              {listOfSetting.map((item, i) =>
-                <ListItem key={i} props={{ i, item, listOfClicks, classes }} />
-              )}
-            </List>
-          </Container>
-        </div>
+        <Container className={classes.container}>
+          <Typography className={classes.header}
+            componant='header'
+            variant='h5'
+            children={'Account Settings'} />
+          <List className={classes.list}>
+            {listOfSetting.map((item, i) =>
+              <ListItem key={i} props={{ i, item, listOfClicks, classes }} />
+            )}
+          </List>
+        </Container>
       </div>
     </div>
   );
