@@ -6,9 +6,11 @@ import { useSnackbar } from 'notistack';
 import * as constants from '../constants';
 import * as fb from '../constants/firebase/constants';
 import * as filters from '../constants/filters';
+// import pushNotifications from 'constants/firebase/pushNotification';
 
 // Components
 import { createFeedback } from '../components/Feedback/index';
+
 
 const GlobalState = createContext();
 export const GlobalStatePovider = (props) => {
@@ -49,12 +51,11 @@ export const GlobalStatePovider = (props) => {
     JobPostModal: false,
     BlockedUsers: false,
     ChangeEmail: false,
-    ChangePassword: false,
-    BlockedUsers: false,
-    ChangeEmail: false,
-    ChangePassword: false
+    ChangePassword: false   
   });
 
+  // Notifications
+  const [notificationList, setNotificationList] = useState([]);
 
   // *******************************************************
   // ******************** Methods **************************
@@ -91,7 +92,7 @@ export const GlobalStatePovider = (props) => {
   };
   const updateProfileData = (data) => {
     return new Promise((resolve, reject) => {
-      fb.updateProfileData(user, profileData, data)
+      fb.updateProfileData(user, data)
         .then(() => { resolve(true) })
         .catch((err) => { reject(err.message) })
     })
@@ -137,22 +138,36 @@ export const GlobalStatePovider = (props) => {
     setSearchList(currentList.filter(item => item.name.toLowerCase().includes(value.toLowerCase())));
   }
 
+  // handle notifications
+  const addNotification = ({ message, color, close, icon}) => {
+    setNotificationList([
+      ...notificationList,
+      {
+        id: notificationList.length,
+        message,
+        color,
+        close,
+        icon
+      }
+    ])
+  }
+
   const state = {
     loading, loggedIn, user, modals, profileData, noticeboardQuery,
     availableSubs, inbox, createUserProfile, post_to_edit, selectedChat,
-    searchList, currentList
+    searchList, currentList, notificationList
   };
   const setState = {
     setLoading, setLoggedIn, setUser, setCreateUserProfile,
     setProfileData, setAvailableSubs, setNoticeboardQuery,
     setInbox, set_post_to_edit, setSelectedChat,
-    setSearchList, setCurrentList
+    setSearchList, setCurrentList, setNotificationList
   };
   const methods = {
     feedback, handleModals, handleAuthState, handleProfileData,
     queryNoticeboard, queryAvailableSubs, handleInbox,
     updateProfileData, deleteUser, searchInbox, deleteChatroom,
-    search, isUserVerfied
+    search, isUserVerfied, addNotification
   };
 
   // Create provider

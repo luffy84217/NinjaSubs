@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 // State
 import GlobalState from 'state';
 
@@ -17,6 +17,12 @@ import Settings from 'views/Settings';
 import Chatroom from 'views/Inbox/ChatArea';
 // Modals
 import Modals from 'views/Modals';
+import Notifications from 'views/Notifications';
+
+// Get notification permission from user
+// Notification.requestPermission(function (status) {
+//     console.log('Notification permission status:', status);
+// });
 
 export default function App() {
     const { state, methods } = useContext(GlobalState);
@@ -31,7 +37,7 @@ export default function App() {
             methods.handleProfileData();
             methods.queryNoticeboard();
             methods.queryAvailableSubs();
-            methods.handleInbox();
+            methods.handleInbox(); 
         }
         // eslint-disable-next-line
     }, [state.user])
@@ -50,9 +56,9 @@ export default function App() {
                 <Route path="/contacts" component={Inbox} />
                 <Route path="/settings" component={Settings} />
                 <Route path="/chatroom" component={Chatroom} />
-            </Switch>          
-            {!state.loggedIn ? <Redirect to="/" /> : null}
+            </Switch>
             <Modals />
+            <Notifications />
         </React.Fragment>
 
     )

@@ -32,7 +32,7 @@ const initState = {
 }
 
 export default function LoginPage() {
-  const { fb, methods, hist } = useContext(store);
+  const { fb, methods, hist, state } = useContext(store);
   const [cardAnimaton, setCardAnimation] = useState("cardHidden");
   const [data, setData] = useState(initState);
   const [title, setTitle] = useState('Register');
@@ -66,15 +66,12 @@ export default function LoginPage() {
     }
     fb.auth.createUserWithEmailAndPassword(data.email, data.password)
       .then(res => {
-        fb.users.doc(res.user.uid).set({
+        let newUserData = {
           name: data.username,
           email: res.user.email,
           uid: res.user.uid
-        });
-        resetData();
-      })
-      .then(() => {
-        hist.push('/createProfile-page');
+        };
+        fb.createProfileData(res.user, newUserData);
       })
       .catch(error => {
         methods.feedback('error', error.message)
@@ -99,6 +96,13 @@ export default function LoginPage() {
         : register();
     }
   };
+
+  useEffect(() => {
+    if (state.user) {
+      hist.push('/profile-page');
+    }
+    // eslint-disable-next-line   
+  }, [state.user])
 
   return (
     <div

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 // Store
 import store from 'state';
-import { firebase } from 'constants/firebase/constants';
 
 // core components
 import Button from "components/CustomButtons/Button.js";
@@ -9,44 +8,34 @@ import CardHeader from "components/Card/CardHeader.js";
 
 export default ({ props }) => {
     const { classes, title } = props;
-    const { fb } = useContext(store);
+    const { fb, hist } = useContext(store);
+    const firebase_ = fb.firebase.firebase_.apps[0].firebase_;
 
-    const handleOAuth = (value) => {
-        console.log(value);
-        switch (value) {
-            case 'google':
-                googleSignIn();
-                break;
-            case 'facebook':
-                googleSignIn();
-                break;
-            default:
-                break;
-        }
-
-    }
-    const facebookSignIn = () => {
-
-
-    }
-    const googleSignIn = () => {
-        console.log(firebase);
-
-        // var provider = firebase.auth.GoogleAuthProvider();
-        // popUp(provider);
-    };
     const popUp = (provider) => {
         fb.auth.signInWithPopup(provider).then(function (result) {
             // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = result.credential.accessToken;
-            console.log(token);
+            // var token = result.credential.accessToken;
+
             // The signed-in user info.
             var user = result.user;
-            console.log(user);
-            // ...
+            let data = {
+                name: user.displayName,
+                email: user.email,
+                uid: user.uid
+            }
+            fb.users.doc(user.uid).update(data)
+                .then(() => {
+                    hist.push('/profile-page');
+                })
+                .catch((err) => {
+                    fb.createProfileData(user, data);
+                    hist.push('/createProfile-page');
+                })
+
         }).catch(function (error) {
             // Handle Errors here.
-            var errorCode = error.code;
+            // var errorCode = error.code;
+
             var errorMessage = error.message;
             console.log(errorMessage);
             // The email of the user's account used.
@@ -58,30 +47,32 @@ export default ({ props }) => {
             // ...
         });
     };
+    const googleSignIn = () => {
+        var provider = new firebase_.auth.GoogleAuthProvider();
+        popUp(provider);
+    };
+    const facebookSignIn = () => {
+        var provider = new firebase_.auth.FacebookAuthProvider();
+        popUp(provider);
+    };
 
     return (
         <CardHeader color="primary" className={classes.cardHeader}>
             <h3 className={classes.title}>{title}</h3>
-            {/* <div className={classes.socialLine}>
+            <div className={classes.socialLine}>
                 <Button
                     justIcon
                     color="transparent"
-                    onClick={() => handleOAuth('twitter')} >
-                    <i className={"fab fa-twitter"} />
-                </Button>
-                <Button
-                    justIcon
-                    color="transparent"
-                    onClick={() => handleOAuth('facebook')} >
-                    <i className={"fab fa-facebook"} />
-                </Button>
-                <Button
-                    justIcon
-                    color="transparent"
-                    onClick={() => handleOAuth('google')} >
+                    onClick={googleSignIn} >
                     <i className={"fab fa-google"} />
                 </Button>
-            </div> */}
+                <Button
+                    justIcon
+                    color="transparent"
+                    onClick={facebookSignIn} >
+                    <i className={"fab fa-facebook"} />
+                </Button>
+            </div>
         </CardHeader>
     )
 }

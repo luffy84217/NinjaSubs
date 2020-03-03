@@ -25,16 +25,13 @@ const useStyles = makeStyles(theme => ({
     padding: '8px 0px',
     textAlign: 'center',
     width: '60%',
-    color: 'white',
-    borderRadius: 6
+    color: 'white'
   },
   container: {
     ...boxShadow,
     backgroundColor: '#f1f1f1',
-    maxWidth: 500,
     [theme.breakpoints.down('sm')]: {
-      padding: 0,
-      width: '100%',
+      padding: 0
     },
     display: 'flex',
     flexDirection: 'column',
@@ -59,6 +56,7 @@ const useStyles = makeStyles(theme => ({
     ...body
   }
 }));
+
 
 export default () => {
   const { state, methods, fb } = useContext(store);
@@ -116,6 +114,8 @@ export default () => {
         feedback('error', err)
       })
   }
+
+
   // Slice 1st item from list for employer view
   let onClickMethods = [
     clearIgnoreList, clearBlockedUserList, handleChangeEmail,
@@ -141,17 +141,19 @@ export default () => {
         color="dark"
       />
       <div className={classes.body}>
-        <Container className={classes.container}>
-          <Typography className={classes.header}
-            componant='header'
-            variant='h5'
-            children={'Account Settings'} />
-          <List className={classes.list}>
-            {listOfSetting.map((item, i) =>
-              <ListItem key={i} props={{ i, item, listOfClicks, classes }} />
-            )}
-          </List>
-        </Container>
+        <div className={bodyContainer}>
+          <Container className={classes.container}>
+            <Typography className={classes.header}
+              componant='header'
+              variant='h5'
+              children={'Account Settings'} />
+            <List className={classes.list}>
+              {listOfSetting.map((item, i) =>
+                <ListItem key={i} props={{ i, item, listOfClicks, classes }} />
+              )}
+            </List>
+          </Container>
+        </div>
       </div>
     </div>
   );

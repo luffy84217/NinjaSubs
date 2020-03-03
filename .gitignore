@@ -28,6 +28,4 @@ yarn.lock
 /.firebase 
 .firebaserc
 firebase.json
-/src/constants
-
-gulpfile.js
+/src/constants/firebase/index.js
