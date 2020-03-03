@@ -42,9 +42,9 @@ const ActivitiesCard = () => {
     const [list, setList] = useState([])
 
     const createPost = () => {
-        // if (!isUserVerfied()) {
-        //     return;
-        // }
+        if (!isUserVerfied()) {
+            return;
+        }
         if (!constants.isNewPostAllowed(noticeboardQuery, profileData)) {
             feedback('error', 'Only 4 posts allowed');
             return;

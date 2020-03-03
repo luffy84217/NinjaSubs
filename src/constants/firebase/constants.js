@@ -41,13 +41,12 @@ export const handleProfileData = (uid, setProfileData, setLoading, hist) => {
         if (doc.exists && doc.data().type !== undefined) {
             setProfileData(doc.data());
             setLoading(false);
-            // hist.push('/profile-page')
             return;
         }
         if (doc.exists && doc.data().type === undefined) {
             setProfileData(doc.data());
             setLoading(false);
-            // hist.push('/createProfile-page')
+            hist.push('/createProfile-page')
             return;
         }
 
@@ -190,7 +189,7 @@ export const removeJobApplication = (post, profileData, feedback) => {
             feedback('error', err.message)
         })
 }
-export const deleteUser = async (user, profileData, feedback) => {
+export const deleteUser = async (user, profileData, feedback, hist) => {
     if (profileData.type === 'Substitute') {
         await availableSubs.doc(profileData.uid).delete()
             .catch(error => feedback('error', error.message))
@@ -209,6 +208,7 @@ export const deleteUser = async (user, profileData, feedback) => {
     await users.doc(profileData.uid).delete()
         .catch(error => feedback('error', error.message))
     await user.delete()
+        .then(() => { hist.push('/') })
         .catch(error => feedback('logout', error.message))
 }
 
@@ -225,9 +225,9 @@ export const handleSignOut = (hist) => {
 export const handleVerification = (user, feedback) => {
     user.sendEmailVerification()
         .then(function () {
-            feedback('success', 'Email sent')
+            feedback('success', 'Verification email has sent')
         }).catch(function (error) {
-            feedback('error', 'error.message')
+            feedback('error', error.message)
         });
 };
 export const createProfileData = (user, data) => {

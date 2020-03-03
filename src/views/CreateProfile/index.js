@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 // State
 import store from 'state';
 // @material-ui/core components
@@ -58,12 +58,13 @@ const useStyles = makeStyles({
 export default function CreateProfile() {
     const classes = useStyles();
     const { state, methods, fb, constants, hist } = useContext(store);
+    const { feedback, updateProfileData } = methods;
 
     const createNewUserProfile = userPath => () => {
         let data = constants.newUser(state.user);
         userPath === "substitute"
             ? data = { ...data, ...constants.newSubData }
-            : data = { ...data, ...constants.newEmployerData };  
+            : data = { ...data, ...constants.newEmployerData };
 
         if (state.user.uid !== undefined) {
             fb.users.doc(state.user.uid).update({ ...data })
@@ -71,10 +72,18 @@ export default function CreateProfile() {
                     hist.push('/profile-page')
                 })
                 .catch(err => {
-                    methods.feedback('error', err.message)
+                    feedback('error', err.message)
                 });
         }
     }
+
+    useEffect(() => {
+        if (!state.user.emailVerified) {
+            fb.handleVerification(state.user, feedback);
+            updateProfileData({ emailSent: true })
+        }
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <div className={classes.container}>
