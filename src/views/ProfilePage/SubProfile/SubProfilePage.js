@@ -18,7 +18,7 @@ import GridItem from "components/Grid/GridItem.js";
 import CustomInput from "components/CustomInput/CustomInput";
 // Custom components
 import DistrictCollapse from './DistrictCollapse';
-import ChangeAvatar from '../ChangeAvatar';
+import ProfileImage from '../ProfileImage';
 import Footer from '../ProfileFooter';
 // Styles
 import useStyles from '../styles';
@@ -36,11 +36,6 @@ export default function ProfilePage({ props }) {
   const [stars, setStars] = useState([]);
 
   const classes = useStyles();
-  const imageClasses = classNames(
-    classes.imgRaised,
-    classes.imgRoundedCircle,
-    classes.imgFluid
-  );
 
   const heartIcon = classNames(
     classes.heartIcon,
@@ -119,17 +114,8 @@ export default function ProfilePage({ props }) {
       <Row className='justify-content-around'>
         <Col xs='11' md='7' lg='4'
           className={classes.gridItem}>
-          <div className={classes.profile}>
-            <div>
-              <img style={{ marginRight: '-32px' }}
-                src={formData ? formData.image : constants.noImage}
-                alt="..." className={imageClasses} />
-              <ChangeAvatar />
-            </div>
-            <div className={classes.name}>
-              <h3 className={classes.title}>{formData ? formData.name : ''}</h3>
-            </div>
-          </div>
+           <ProfileImage formData={formData} />
+
           <div className='d-flex align-items-center justify-content-around w-100 mt-2 mb-3'>
             <Tooltip placement='right'
               title='Likes'>
