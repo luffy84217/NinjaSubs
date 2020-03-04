@@ -24,7 +24,7 @@ export default function ProfileImage({ formData }) {
                 <img alt="..."
                     style={{ marginRight: '-32px' }}
                     src={formData ? formData.image : constants.noImage}
-                    className={imageClasses} />
+                    className={classes.image} />
                 <ChangeAvatar />
             </div>
             <div className={classes.name}>
