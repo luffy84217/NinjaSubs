@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 // Store
 import store from 'state';
-// nodejs library that concatenates classes
-import classNames from "classnames";
 // Custom components
 import ChangeAvatar from './ChangeAvatar';
 // Styles
@@ -12,11 +10,6 @@ export default function ProfileImage({ formData }) {
     const { constants } = useContext(store);
 
     const classes = useStyles();
-    const imageClasses = classNames(
-        classes.imgRaised,
-        classes.imgRoundedCircle,
-        classes.imgFluid
-    );
 
     return (
         <div className={classes.profile}>
